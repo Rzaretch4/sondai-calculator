@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Agent Cost Calculator | Sondai AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Sondai AI Brand Colors */
+            --primary: #3452FF;
+            --primary-dark: #1F1C68;
+            --secondary: #E97CFF;
+            --accent: #CB7CFF;
+            --pink: #F58BC6;
+            --sonic-blue: #135A9C;
+            --black: #160326;
+            --white: #FFFFFF;
+            
+            /* Gradients */
+            --gradient-1: linear-gradient(135deg, #CB7CFF 0%, #E97CFF 100%);
+            --gradient-2: linear-gradient(135deg, #160326 0%, #3452FF 100%);
+            
+            /* UI Colors */
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--gradient-2);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(22, 3, 38, 0.2);
+            padding: 30px 40px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .logo-container {
+            flex-shrink: 0;
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+        }
+
+        .header-content {
+            flex: 1;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            font-weight: 800;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .pricing-status {
+            margin-left: auto;
+            text-align: right;
+            padding: 15px 20px;
+            background: var(--gray-50);
+            border-radius: 10px;
+            border: 2px solid var(--gray-200);
+        }
+
+        .pricing-status-label {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray-600);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .pricing-status-date {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .pricing-source-note {
+            font-size: 0.8em;
+            color: var(--gray-600);
+            margin-top: 4px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .config-panel {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(22, 3, 38, 0.2);
+            overflow: hidden;
+        }
+
+        .results-panel {
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .section {
+            padding: 30px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .section-icon {
+            width: 6px;
+            height: 36px;
+            background: var(--gradient-1);
+            border-radius: 3px;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .section-subtitle {
+            font-size: 0.85em;
+            color: var(--gray-600);
+            font-weight: 400;
+            margin-left: auto;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.95em;
+        }
+
+        select, input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.2s;
+            background: white;
+            font-family: inherit;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234b5563' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        select:hover, input:hover {
+            border-color: var(--gray-300);
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 82, 255, 0.1);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-prefix {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-600);
+            font-weight: 600;
+            pointer-events: none;
+        }
+
+        .input-wrapper input {
+            padding-left: 28px;
+        }
+
+        .helper-text {
+            font-size: 0.85em;
+            color: var(--gray-600);
+            margin-top: 6px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .toggle-group {
+            display: flex;
+            gap: 10px;
+            background: var(--gray-100);
+            padding: 6px;
+            border-radius: 10px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            background: transparent;
+            color: var(--gray-600);
+            border-radius: 6px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .toggle-btn.active {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 2px 8px rgba(203, 124, 255, 0.3);
+        }
+
+        .toggle-btn:hover:not(.active) {
+            color: var(--gray-800);
+        }
+
+        .results {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(22, 3, 38, 0.2);
+            padding: 30px;
+        }
+
+        .results h2 {
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--black);
+        }
+
+        .cost-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .cost-card {
+            background: var(--gradient-1);
+            padding: 20px;
+            border-radius: 12px;
+            color: white;
+        }
+
+        .cost-card-label {
+            font-size: 0.85em;
+            opacity: 0.9;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .cost-card-value {
+            font-size: 1.8em;
+            font-weight: 800;
+        }
+
+        .breakdown {
+            background: var(--gray-50);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .breakdown h3 {
+            margin-bottom: 18px;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--gray-800);
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-200);
+            font-size: 0.95em;
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+            padding-top: 16px;
+            margin-top: 8px;
+            border-top: 2px solid var(--gray-300);
+            font-weight: 700;
+            font-size: 1.1em;
+            color: var(--primary);
+        }
+
+        .breakdown-label {
+            color: var(--gray-700);
+        }
+
+        .breakdown-value {
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .info-box {
+            background: var(--gray-50);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            margin-top: 20px;
+        }
+
+        .info-box-title {
+            font-weight: 700;
+            font-size: 0.95em;
+            color: var(--black);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-box-content {
+            font-size: 0.9em;
+            color: var(--gray-700);
+            line-height: 1.8;
+        }
+
+        .info-box-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .info-box-content li {
+            padding: 4px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .info-box-content li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .footer {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(22, 3, 38, 0.2);
+            padding: 40px;
+        }
+
+        .footer h3 {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .footer p {
+            color: var(--gray-600);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .footer ul {
+            list-style: none;
+            margin-left: 0;
+            color: var(--gray-700);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .footer li {
+            padding: 12px 0;
+            padding-left: 0;
+            position: relative;
+            line-height: 1.6;
+            border-left: 3px solid var(--primary);
+            padding-left: 15px;
+        }
+
+        .footer strong {
+            color: var(--black);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .disclaimer {
+            background: var(--gray-50);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.85em;
+            color: var(--gray-600);
+            font-style: italic;
+            border: 1px solid var(--gray-200);
+        }
+
+        .checkbox-group {
+            margin-top: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: var(--gray-50);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .checkbox-item:hover {
+            background: var(--gray-100);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(22, 3, 38, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(233, 124, 255, 0.3);
+            border-top-color: #E97CFF;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-panel {
+                position: static;
+            }
+
+            .pricing-status {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 25px;
+            }
+
+            .logo {
+                height: 40px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .cost-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div class="loading-text">Loading latest pricing data...</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Header with Logo -->
+        <div class="header">
+            <div class="logo-container">
+                <svg class="logo" viewBox="0 0 334 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M115.414 57.0094C112.996 57.0094 111.007 56.6831 109.443 56.0351C107.879 55.3826 106.646 54.5648 105.734 53.5816C104.822 52.5939 104.143 51.6196 103.696 50.6498C103.249 49.6845 102.896 48.5493 102.637 47.2443H109.667C109.926 48.0622 110.252 48.7415 110.641 49.2822C111.03 49.823 111.638 50.2967 112.455 50.7034C113.273 51.1146 114.355 51.3157 115.691 51.3157C117.291 51.3157 118.444 50.9716 119.15 50.2833C119.856 49.5951 120.209 48.8219 120.209 47.9683C120.209 47.1147 119.901 46.489 119.289 45.9885C118.676 45.4879 117.774 45.1036 116.58 44.8444L112.505 44.0087C110.869 43.6735 109.34 43.1819 107.928 42.5294C106.516 41.8769 105.363 40.9875 104.469 39.8524C103.575 38.7172 103.128 37.2558 103.128 35.4726C103.128 32.8314 104.134 30.6459 106.141 28.9164C108.152 27.1868 110.882 26.3198 114.341 26.3198C116.536 26.3198 118.35 26.6193 119.78 27.2137C121.21 27.808 122.368 28.5544 123.239 29.4437C124.115 30.3376 124.763 31.2314 125.192 32.1208C125.621 33.0146 125.966 34.0738 126.225 35.3028H119.418C119.195 34.5967 118.909 34.0201 118.556 33.5732C118.203 33.1263 117.68 32.7286 116.992 32.371C116.303 32.018 115.383 31.8392 114.23 31.8392C112.665 31.8392 111.562 32.1744 110.909 32.8448C110.257 33.5151 109.935 34.2213 109.935 34.9631C109.935 35.781 110.288 36.4156 110.994 36.8625C111.7 37.3094 112.612 37.6446 113.729 37.8681L117.582 38.7038C120.334 39.2624 122.596 40.2278 124.361 41.6043C126.126 42.9808 127.011 44.974 127.011 47.575C127.011 49.3225 126.556 50.9135 125.644 52.3436C124.732 53.7782 123.414 54.9089 121.68 55.7491C119.95 56.5848 117.859 57.0049 115.401 57.0049L115.414 57.0094Z" fill="#0D0D0E"/>
+                    <path d="M144.441 57.0093C141.205 57.0093 138.452 56.2853 136.182 54.8328C133.912 53.3804 132.191 51.4944 131.02 49.1704C129.849 46.8465 129.264 44.3438 129.264 41.6668C129.264 38.9897 129.849 36.487 131.02 34.1631C132.191 31.8391 133.912 29.9487 136.182 28.5007C138.452 27.0482 141.205 26.3242 144.441 26.3242C147.677 26.3242 150.474 27.0482 152.727 28.5007C154.979 29.9532 156.691 31.8391 157.862 34.1631C159.033 36.487 159.618 38.9897 159.618 41.6668C159.618 44.3438 159.033 46.8465 157.862 49.1704C156.691 51.4944 154.979 53.3848 152.727 54.8328C150.474 56.2853 147.712 57.0093 144.441 57.0093ZM144.441 50.8151C146.117 50.8151 147.52 50.386 148.655 49.5324C149.79 48.6788 150.653 47.5526 151.252 46.1582C151.846 44.7639 152.146 43.2667 152.146 41.6668C152.146 40.0668 151.846 38.525 151.252 37.1485C150.657 35.772 149.79 34.6547 148.655 33.8011C147.52 32.9475 146.117 32.5184 144.441 32.5184C142.765 32.5184 141.406 32.9475 140.258 33.8011C139.105 34.6592 138.229 35.772 137.634 37.1485C137.04 38.525 136.741 40.0311 136.741 41.6668C136.741 43.3025 137.04 44.7639 137.634 46.1582C138.229 47.5526 139.105 48.6788 140.258 49.5324C141.411 50.3905 142.805 50.8151 144.441 50.8151Z" fill="#0D0D0E"/>
+                    <path d="M163.371 56.451V26.8743H170.794V31.1155H171.13C171.429 30.5926 171.894 29.9535 172.524 29.1893C173.159 28.4251 174.03 27.7592 175.147 27.1782C176.265 26.6017 177.677 26.3112 179.388 26.3112C181.659 26.3112 183.527 26.8251 184.997 27.8441C186.468 28.8675 187.563 30.2172 188.291 31.8886C189.019 33.5601 189.381 35.3656 189.381 37.3008V56.4421H181.958V38.3063C181.958 36.7064 181.511 35.3299 180.618 34.1768C179.724 33.0238 178.387 32.4473 176.6 32.4473C175.223 32.4473 174.106 32.7914 173.252 33.4796C172.394 34.1679 171.773 35.0528 171.384 36.1298C170.995 37.2114 170.799 38.3421 170.799 39.5353V56.4421H163.376L163.371 56.451Z" fill="#0D0D0E"/>
+                    <path d="M206.208 57.0091C204.014 57.0091 202.097 56.5711 200.461 55.6997C198.825 54.8237 197.458 53.6528 196.358 52.1825C195.259 50.7121 194.441 49.0675 193.905 47.2441C193.364 45.4207 193.096 43.5615 193.096 41.6621C193.096 39.7627 193.364 37.9036 193.905 36.0802C194.445 34.2567 195.263 32.6121 196.358 31.1418C197.453 29.6714 198.821 28.5005 200.461 27.6246C202.097 26.7486 204.014 26.3151 206.208 26.3151C208.108 26.3151 209.667 26.6235 210.896 27.2357C212.125 27.848 213.091 28.5184 213.797 29.2424C214.503 29.9664 214.986 30.5518 215.249 30.9988H215.584V14.0428H223.008V56.4505H215.584V52.321H215.249C214.99 52.7679 214.503 53.3623 213.797 54.1087C213.091 54.855 212.121 55.5209 210.896 56.1198C209.672 56.7186 208.108 57.0136 206.208 57.0136V57.0091ZM208.161 50.9266C209.837 50.9266 211.231 50.4708 212.344 49.5591C213.462 48.6474 214.297 47.4854 214.856 46.0731C215.415 44.6609 215.692 43.1906 215.692 41.6666C215.692 40.1426 215.415 38.6723 214.856 37.26C214.297 35.8478 213.462 34.6858 212.344 33.7741C211.227 32.8624 209.833 32.4065 208.161 32.4065C206.49 32.4065 205.082 32.8624 203.947 33.7741C202.812 34.6858 201.967 35.8478 201.408 37.26C200.85 38.6723 200.573 40.1426 200.573 41.6666C200.573 43.1906 200.85 44.6609 201.408 46.0731C201.967 47.4899 202.812 48.6474 203.947 49.5591C205.082 50.4708 206.485 50.9266 208.161 50.9266Z" fill="#0D0D0E"/>
+                    <path d="M240.228 26.32C242.127 26.32 243.687 26.6284 244.916 27.2407C246.145 27.8529 247.11 28.5233 247.816 29.2473C248.522 29.9713 249.005 30.5568 249.269 31.0037H249.604V26.8742H257.027V56.4465H249.604V52.317H249.269C249.01 52.7639 248.522 53.3583 247.816 54.1046C247.11 54.851 246.14 55.5169 244.916 56.1157C243.691 56.7146 242.127 57.0096 240.228 57.0096C238.033 57.0096 236.116 56.5716 234.48 55.7001C232.845 54.8242 231.477 53.6533 230.378 52.1829C229.278 50.7126 228.46 49.0679 227.924 47.2445C227.383 45.4211 227.115 43.5619 227.115 41.6626C227.115 39.7632 227.383 37.904 227.924 36.0806C228.465 34.2572 229.283 32.6126 230.378 31.1422C231.473 29.6719 232.84 28.501 234.48 27.625C236.116 26.7491 238.033 26.3156 240.228 26.3156V26.32ZM242.181 32.4025C240.505 32.4025 239.101 32.8584 237.966 33.7701C236.831 34.6818 235.986 35.8438 235.428 37.256C234.869 38.6682 234.592 40.1386 234.592 41.6626C234.592 43.1865 234.869 44.6569 235.428 46.0691C235.986 47.4858 236.831 48.6434 237.966 49.5551C239.101 50.4668 240.505 50.9226 242.181 50.9226C243.857 50.9226 245.251 50.4668 246.364 49.5551C247.481 48.6434 248.317 47.4814 248.875 46.0691C249.434 44.6569 249.711 43.1865 249.711 41.6626C249.711 40.1386 249.434 38.6682 248.875 37.256C248.317 35.8438 247.481 34.6818 246.364 33.7701C245.247 32.8584 243.852 32.4025 242.181 32.4025Z" fill="#0D0D0E"/>
+                    <path d="M265.957 22.3021C264.656 22.3021 263.584 21.873 262.748 21.0194C261.912 20.1658 261.492 19.1424 261.492 17.9491C261.492 16.7559 261.912 15.7369 262.748 14.8788C263.584 14.0252 264.652 13.5962 265.957 13.5962C267.262 13.5962 268.339 14.0252 269.193 14.8788C270.046 15.7369 270.475 16.7559 270.475 17.9491C270.475 19.1424 270.046 20.1614 269.193 21.0194C268.339 21.8775 267.257 22.3021 265.957 22.3021ZM262.274 56.4507V26.874H269.698V56.4463H262.274V56.4507Z" fill="#0D0D0E"/>
+                    <path d="M284.036 56.4509L298.265 15.1561H308.142L322.426 56.4509H314.502L311.543 47.7451H294.914L291.955 56.4509H284.031H284.036ZM297.095 41.162H309.371L303.235 22.9145L297.099 41.162H297.095Z" fill="#0D0D0E"/>
+                    <path d="M328.478 22.3021C327.178 22.3021 326.105 21.873 325.269 21.0194C324.434 20.1658 324.014 19.1424 324.014 17.9491C324.014 16.7559 324.434 15.7369 325.269 14.8788C326.105 14.0252 327.173 13.5962 328.478 13.5962C329.783 13.5962 330.86 14.0252 331.714 14.8788C332.568 15.7369 332.997 16.7559 332.997 17.9491C332.997 19.1424 332.568 20.1614 331.714 21.0194C330.86 21.8775 329.779 22.3021 328.478 22.3021ZM324.796 56.4507V26.874H332.219V56.4463H324.796V56.4507Z" fill="#0D0D0E"/>
+                    <defs>
+                        <linearGradient id="logoGradient" x1="12.7686" y1="6.24442" x2="75.5237" y2="55.7841" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#E97CFF"/>
+                            <stop offset="1" stop-color="#7E34FF"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M5.51787 60.7817C6.19237 62.0882 6.93472 63.3552 7.74094 64.5747C8.37553 65.5372 9.70458 65.7665 10.6425 65.0886L26.3596 53.7394C27.2118 53.1247 27.4393 51.9724 26.9084 51.0691C26.8985 51.0533 26.8885 51.0375 26.8805 51.0197C26.3537 50.1164 25.2321 49.7389 24.2703 50.1659L6.50967 58.0284C5.44802 58.4989 4.98904 59.7539 5.51787 60.7798V60.7817Z" fill="url(#logoGradient)"/>
+                    <path d="M22.7457 8.3309L32.5121 24.9949C33.0409 25.8982 34.1724 26.2421 35.1343 25.8132C35.1482 25.8073 35.1622 25.8013 35.1762 25.7954C36.138 25.3705 36.6329 24.3051 36.3057 23.3129L30.269 4.99652C29.9078 3.90153 28.6965 3.31845 27.6109 3.73155C26.224 4.25928 24.873 4.86014 23.5619 5.52622C22.5282 6.05198 22.161 7.33671 22.7437 8.3309H22.7457Z" fill="url(#logoGradient)"/>
+                    <path d="M24.2524 34.0988L6.47387 26.2737C5.41223 25.8073 4.163 26.3073 3.74592 27.3806C3.2171 28.7424 2.76011 30.1378 2.37895 31.5649C2.08161 32.6776 2.79803 33.8082 3.9355 34.0454L22.9733 38.0103C24.005 38.2257 25.0187 37.6229 25.342 36.6287C25.346 36.6168 25.35 36.603 25.354 36.5911C25.6793 35.5989 25.2123 34.5217 24.2504 34.0968L24.2524 34.0988Z" fill="url(#logoGradient)"/>
+                    <path d="M10.5927 19.2037L26.3338 30.5193C27.1879 31.132 28.3633 30.9936 29.0677 30.2149C29.0857 30.1951 29.1017 30.1773 29.1196 30.1576C29.826 29.3828 29.842 28.2087 29.1336 27.432L16.0945 13.1378C15.3162 12.2839 13.9692 12.2385 13.147 13.0528C12.1053 14.0865 11.1195 15.1736 10.1916 16.3101C9.46121 17.2055 9.65079 18.5277 10.5907 19.2037H10.5927Z" fill="url(#logoGradient)"/>
+                    <path d="M22.5441 42.1353L3.09321 42.157C1.93179 42.157 0.995861 43.1196 1.05573 44.2679C1.13356 45.7404 1.28921 47.1952 1.5187 48.6222C1.70229 49.7587 2.81982 50.5038 3.9553 50.2647L22.9831 46.2583C24.0148 46.0409 24.6973 45.0823 24.5855 44.0446C24.5836 44.0209 24.5796 43.9952 24.5776 43.9715C24.4698 42.9318 23.5997 42.1333 22.5441 42.1353Z" fill="url(#logoGradient)"/>
+                    <path d="M60.444 43.9734C60.442 43.9971 60.438 44.0228 60.436 44.0466C60.3243 45.0842 61.0068 46.0428 62.0385 46.2603L81.0663 50.2667C82.2018 50.5058 83.3193 49.7607 83.5029 48.6242C83.7324 47.1952 83.888 45.7424 83.9658 44.2699C84.0257 43.1216 83.0918 42.159 81.9284 42.159L62.4775 42.1372C61.4218 42.1372 60.5518 42.9338 60.444 43.9734Z" fill="url(#logoGradient)"/>
+                    <path d="M54.625 4.95501L48.6502 23.2912C48.3269 24.2853 48.8258 25.3467 49.7897 25.7697C49.8036 25.7756 49.8176 25.7816 49.8316 25.7875C50.7954 26.2124 51.9249 25.8646 52.4518 24.9613L62.1642 8.26568C62.745 7.26951 62.3718 5.98478 61.3361 5.46298C60.023 4.80084 58.668 4.20591 57.2791 3.68213C56.1935 3.273 54.9822 3.86002 54.625 4.95501Z" fill="url(#logoGradient)"/>
+                    <path d="M38.3313 3.29078L40.3728 22.4511C40.4826 23.4908 41.3766 24.2636 42.4322 24.2597C42.4642 24.2597 42.4961 24.2597 42.528 24.2597C43.5837 24.2597 44.4737 23.4849 44.5815 22.4452L46.5591 3.27695C46.6788 2.11871 45.7888 1.11068 44.6154 1.05139C43.9189 1.01779 43.2165 1 42.5121 1C41.7498 1 40.9914 1.02174 40.2371 1.06127C39.0777 1.12452 38.2116 2.14638 38.3333 3.29078H38.3313Z" fill="url(#logoGradient)"/>
+                    <path d="M58.672 53.7256L74.4011 65.0589C75.341 65.7349 76.6681 65.5056 77.3027 64.543C78.1089 63.3196 78.8493 62.0526 79.5218 60.7442C80.0486 59.7184 79.5876 58.4633 78.526 57.9948L60.7574 50.15C59.7935 49.7251 58.674 50.1026 58.1472 51.0079C58.1372 51.0237 58.1272 51.0415 58.1172 51.0573C57.5884 51.9605 57.8159 53.1109 58.67 53.7256H58.672Z" fill="url(#logoGradient)"/>
+                    <path d="M62.0307 37.947L81.0545 33.9189C82.192 33.6778 82.9044 32.5452 82.6031 31.4324C82.2179 30.0074 81.7569 28.6119 81.2241 27.2521C80.805 26.1789 79.5518 25.6827 78.4922 26.1532L60.7395 34.0375C59.7777 34.4644 59.3147 35.5436 59.644 36.5358C59.648 36.5477 59.652 36.5595 59.6559 36.5734C59.9832 37.5656 60.999 38.1644 62.0307 37.947Z" fill="url(#logoGradient)"/>
+                    <path d="M68.8297 13.0548L55.8365 27.3905C55.1321 28.1672 55.1501 29.3413 55.8605 30.1141C55.8784 30.1339 55.8944 30.1516 55.9124 30.1714C56.6188 30.9482 57.7942 31.0846 58.6463 30.4679L74.3515 19.1009C75.2894 18.423 75.473 17.1007 74.7406 16.2073C73.8107 15.0728 72.8209 13.9897 71.7752 12.9599C70.951 12.1495 69.604 12.197 68.8297 13.0548Z" fill="url(#logoGradient)"/>
+                    <path d="M29.1496 56.8445L14.524 72.9926H3.03948C1.91198 72.9926 1 73.8979 1 75.0127V78.5249C1 79.6417 1.91397 80.5449 3.03948 80.5449H15.3701C18.0342 80.5449 20.5027 79.1574 21.8697 76.8943L32.5101 59.2638C33.0509 58.3664 32.8134 57.2082 31.9593 56.5935L31.9055 56.554C31.0474 55.9353 29.858 56.0598 29.1496 56.8425V56.8445Z" fill="url(#logoGradient)"/>
+                    <path d="M69.0689 71.3521L55.8702 56.8208C55.1638 56.044 53.9844 55.9373 53.1323 56.554C53.1143 56.5678 53.0944 56.5816 53.0764 56.5955C52.2223 57.2082 51.9589 58.3526 52.4877 59.2559L61.7452 75.1312C63.1081 77.4675 65.6246 78.9064 68.3485 78.9064H81.9943C83.1218 78.9064 84.0337 78.0011 84.0337 76.8864V73.3741C84.0337 72.2574 83.1198 71.3541 81.9943 71.3541H69.0669L69.0689 71.3521Z" fill="url(#logoGradient)"/>
+                </svg>
+            </div>
+            <div class="header-content">
+                <h1>AI Voice Agent Cost Calculator</h1>
+                <p class="subtitle">Comprehensive cost estimation for AI voice, SMS, and email automation</p>
+            </div>
+            <div class="pricing-status">
+                <div class="pricing-status-label">Pricing Data Status</div>
+                <div class="pricing-status-date">
+                    <span class="status-indicator"></span>
+                    <span id="last-updated">Loading...</span>
+                </div>
+                <div class="pricing-source-note" id="pricing-source">Verified from official sources</div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <!-- Configuration Panel -->
+            <div class="config-panel">
+                <!-- Communication Type -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon"></div>
+                        <h2 class="section-title">Communication Type</h2>
+                        <span class="section-subtitle">Voice calls</span>
+                    </div>
+                    <div class="toggle-group">
+                        <button class="toggle-btn active" onclick="setCallType('inbound')">Inbound Calls</button>
+                        <button class="toggle-btn" onclick="setCallType('outbound')">Outbound Calls</button>
+                    </div>
+                </div>
+
+                <!-- Speech-to-Text -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon"></div>
+                        <h2 class="section-title">Speech-to-Text</h2>
+                        <span class="section-subtitle">Audio transcription</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Provider</label>
+                        <select id="stt-provider" onchange="updateSTTPrice()">
+                            <!-- Options populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Price per Minute</label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="stt-price" step="0.0001" value="0.0043" oninput="calculate()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text-to-Speech -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon"></div>
+                        <h2 class="section-title">Text-to-Speech</h2>
+                        <span class="section-subtitle">Voice synthesis</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Provider</label>
+                        <select id="tts-provider" onchange="updateTTSPrice()">
+                            <!-- Options populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Price per 1K Chars</label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">$</span>
+                                <input type="number" id="tts-price" step="0.001" value="0.030" oninput="calculate()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Characters per Minute</label>
+                            <input type="number" id="tts-chars" value="1000" oninput="calculate()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Language Model -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon"></div>
+                        <h2 class="section-title">Language Model</h2>
+                        <span class="section-subtitle">AI processing</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Model</label>
+                        <select id="llm-model" onchange="updateLLMPrice()">
+                            <!-- Options populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Input (per 1M tokens)</label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">$</span>
+                                <input type="number" id="llm-input-price" step="0.01" value="2.50" oninput="calculate()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Output (per 1M tokens)</label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">$</span>
+                                <input type="number" id="llm-output-price" step="0.01" value="10.00" oninput="calculate()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Input Tokens/Min</label>
+                            <input type="number" id="llm-input-tokens" value="500" oninput="calculate()">
+                        </div>
+                        <div class="form-group">
+                            <label>Output Tokens/Min</label>
+                            <input type="number" id="llm-output-tokens" value="300" oninput="calculate()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Telephony -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon"></div>
+                        <h2 class="section-title">Telephony Provider</h2>
+                        <span class="section-subtitle">Call infrastructure</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Provider</label>
+                        <select id="telephony-provider" onchange="updateTelephonyPrice()">
+                            <!-- Options populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Price per Minute</label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="telephony-price" step="0.0001" value="0.0085" oninput="calculate()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Services -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon"></div>
+                        <h2 class="section-title">Additional Services</h2>
+                        <span class="section-subtitle">Optional features</span>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="enable-sms" onchange="calculate()">
+                            <label for="enable-sms">SMS Notifications</label>
+                        </div>
+                        
+                        <div id="sms-config" style="margin-left: 30px; margin-top: 15px; display: none;">
+                            <div class="form-group">
+                                <label>SMS Provider</label>
+                                <select id="sms-provider" onchange="updateSMSPrice()">
+                                    <!-- Options populated by JavaScript -->
+                                </select>
+                            </div>
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label>Price per SMS</label>
+                                    <div class="input-wrapper">
+                                        <span class="input-prefix">$</span>
+                                        <input type="number" id="sms-price" step="0.0001" value="0.0079" oninput="calculate()">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>SMS per Call</label>
+                                    <input type="number" id="sms-per-call" value="2" oninput="calculate()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="enable-email" onchange="calculate()">
+                            <label for="enable-email">Email Notifications</label>
+                        </div>
+                        
+                        <div id="email-config" style="margin-left: 30px; margin-top: 15px; display: none;">
+                            <div class="form-group">
+                                <label>Email Provider</label>
+                                <select id="email-provider" onchange="updateEmailPrice()">
+                                    <!-- Options populated by JavaScript -->
+                                </select>
+                            </div>
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label>Price per 1K</label>
+                                    <div class="input-wrapper">
+                                        <span class="input-prefix">$</span>
+                                        <input type="number" id="email-price" step="0.01" value="0.10" oninput="calculate()">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Emails per Call</label>
+                                    <input type="number" id="email-per-call" value="1" oninput="calculate()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Usage Settings -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon"></div>
+                        <h2 class="section-title">Usage Settings</h2>
+                        <span class="section-subtitle">Volume configuration</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Average Call Duration (minutes)</label>
+                        <input type="number" id="call-duration" value="5" min="0.1" step="0.5" oninput="calculate()">
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Calls per Month</label>
+                        <input type="number" id="calls-per-month" value="1000" min="1" step="100" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="results-panel">
+                <div class="results">
+                    <h2>Cost Summary</h2>
+                    
+                    <div class="cost-cards">
+                        <div class="cost-card">
+                            <div class="cost-card-label">Per Call</div>
+                            <div class="cost-card-value" id="cost-per-call">$0.00</div>
+                        </div>
+                        <div class="cost-card">
+                            <div class="cost-card-label">Per Minute</div>
+                            <div class="cost-card-value" id="cost-per-minute">$0.00</div>
+                        </div>
+                        <div class="cost-card">
+                            <div class="cost-card-label">Per Hour</div>
+                            <div class="cost-card-value" id="cost-per-hour">$0.00</div>
+                        </div>
+                        <div class="cost-card">
+                            <div class="cost-card-label">Monthly Total</div>
+                            <div class="cost-card-value" id="cost-monthly">$0.00</div>
+                        </div>
+                    </div>
+
+                    <div class="breakdown">
+                        <h3>Cost Breakdown (per minute)</h3>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Speech-to-Text</span>
+                            <span class="breakdown-value" id="breakdown-stt">$0.0000</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Text-to-Speech</span>
+                            <span class="breakdown-value" id="breakdown-tts">$0.0000</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">LLM Input</span>
+                            <span class="breakdown-value" id="breakdown-llm-input">$0.0000</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">LLM Output</span>
+                            <span class="breakdown-value" id="breakdown-llm-output">$0.0000</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Telephony</span>
+                            <span class="breakdown-value" id="breakdown-telephony">$0.0000</span>
+                        </div>
+                        <div class="breakdown-item" id="breakdown-sms-item" style="display: none;">
+                            <span class="breakdown-label">SMS</span>
+                            <span class="breakdown-value" id="breakdown-sms">$0.0000</span>
+                        </div>
+                        <div class="breakdown-item" id="breakdown-email-item" style="display: none;">
+                            <span class="breakdown-label">Email</span>
+                            <span class="breakdown-value" id="breakdown-email">$0.0000</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Total</span>
+                            <span class="breakdown-value" id="breakdown-total">$0.0000</span>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-box-title">
+                            Cost Optimization Tips
+                        </div>
+                        <div class="info-box-content">
+                            <ul>
+                                <li>Use batch STT for non-real-time needs</li>
+                                <li>Choose smaller LLMs for simple tasks</li>
+                                <li>Implement prompt caching to reduce costs</li>
+                                <li>Use SIP trunking for lower telephony rates</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <h3>Pricing Data Sources & Methodology</h3>
+            <p>All pricing information is verified from official provider documentation. We monitor provider pricing regularly to ensure accuracy. Prices shown reflect standard pay-as-you-go rates without volume discounts or enterprise agreements.</p>
+            
+            <div id="sources-list">
+                <!-- Dynamically populated from JSON -->
+            </div>
+
+            <div class="disclaimer">
+                <strong>Disclaimer:</strong> Pricing may vary based on usage volume, geographic region, enterprise contracts, and specific features. Volume discounts, committed use discounts, and promotional offers are not reflected in these estimates. Always verify current pricing with providers before production deployment. This calculator is for estimation purposes only. Backend pricing service coming soon for real-time updates.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration for pricing data source
+        const PRICING_CONFIG = {
+            // Change this to your backend API endpoint when ready
+            useBackend: true, // Set to true when backend is available
+            backendURL: '/api/pricing',
+            
+            // Fallback to local JSON file
+            localJSON: './pricing-data.json',
+            
+            // Or use embedded pricing (current method)
+            useEmbedded: true
+        };
+
+        let pricing = {};
+        let pricingMetadata = {};
+        let currentCallType = 'inbound';
+
+        // Embedded pricing data (fallback)
+        const embeddedPricing = {
+            lastUpdated: "2026-02-09",
+            version: "1.0.0",
+            pricing: {
+                stt: {
+                    'deepgram-nova2': { price: 0.0043, name: 'Deepgram Nova 2 (Batch)', unit: '/min' },
+                    'deepgram-nova3': { price: 0.0077, name: 'Deepgram Nova 3 (Streaming)', unit: '/min' },
+                    'assembly-best': { price: 0.0050, name: 'AssemblyAI Best', unit: '/min' },
+                    'assembly-nano': { price: 0.0025, name: 'AssemblyAI Nano', unit: '/min' },
+                    'openai-whisper': { price: 0.0060, name: 'OpenAI Whisper', unit: '/min' },
+                    'openai-gpt4o-transcribe': { price: 0.0060, name: 'OpenAI GPT-4o Transcribe', unit: '/min' },
+                    'azure-stt': { price: 0.0160, name: 'Azure Speech STT', unit: '/min' },
+                    'google-chirp': { price: 0.0160, name: 'Google Chirp', unit: '/min' }
+                },
+                tts: {
+                    'deepgram-aura2': { price: 0.030, name: 'Deepgram Aura 2', unit: '/1K chars' },
+                    'elevenlabs-flash': { price: 0.08, name: 'ElevenLabs Flash v2.5', unit: '/1K chars' },
+                    'elevenlabs-turbo': { price: 0.10, name: 'ElevenLabs Turbo v2.5', unit: '/1K chars' },
+                    'elevenlabs-multilingual': { price: 0.30, name: 'ElevenLabs Multilingual v2', unit: '/1K chars' },
+                    'openai-tts': { price: 0.015, name: 'OpenAI TTS', unit: '/1K chars' },
+                    'openai-tts-hd': { price: 0.030, name: 'OpenAI TTS HD', unit: '/1K chars' },
+                    'azure-neural': { price: 0.016, name: 'Azure Neural TTS', unit: '/1K chars' },
+                    'google-wavenet': { price: 0.016, name: 'Google WaveNet', unit: '/1K chars' },
+                    'cartesia': { price: 0.038, name: 'Cartesia Sonic', unit: '/1K chars' }
+                },
+                llm: {
+                    'gpt-4o': { input: 2.50, output: 10.00, name: 'GPT-4o', unit: '/1M tokens' },
+                    'gpt-4o-mini': { input: 0.15, output: 0.60, name: 'GPT-4o mini', unit: '/1M tokens' },
+                    'gpt-4-turbo': { input: 10.00, output: 30.00, name: 'GPT-4 Turbo', unit: '/1M tokens' },
+                    'gpt-3.5-turbo': { input: 0.50, output: 1.50, name: 'GPT-3.5 Turbo', unit: '/1M tokens' },
+                    'claude-opus-4.5': { input: 5.00, output: 25.00, name: 'Claude Opus 4.5', unit: '/1M tokens' },
+                    'claude-sonnet-4.5': { input: 3.00, output: 15.00, name: 'Claude Sonnet 4.5', unit: '/1M tokens' },
+                    'claude-haiku-4.5': { input: 1.00, output: 5.00, name: 'Claude Haiku 4.5', unit: '/1M tokens' },
+                    'claude-sonnet-4': { input: 3.00, output: 15.00, name: 'Claude Sonnet 4', unit: '/1M tokens' },
+                    'gemini-2.0-flash': { input: 0.075, output: 0.30, name: 'Gemini 2.0 Flash', unit: '/1M tokens' },
+                    'gemini-1.5-pro': { input: 1.25, output: 5.00, name: 'Gemini 1.5 Pro', unit: '/1M tokens' }
+                },
+                telephony: {
+                    'twilio-inbound': { price: 0.0085, name: 'Twilio Inbound (US)', unit: '/min' },
+                    'twilio-outbound': { price: 0.0140, name: 'Twilio Outbound (US)', unit: '/min' },
+                    'twilio-sip-outbound': { price: 0.0020, name: 'Twilio SIP Outbound', unit: '/min' },
+                    'vonage-inbound': { price: 0.0070, name: 'Vonage Inbound (US)', unit: '/min' },
+                    'vonage-outbound': { price: 0.0120, name: 'Vonage Outbound (US)', unit: '/min' },
+                    'telnyx-inbound': { price: 0.0040, name: 'Telnyx Inbound (US)', unit: '/min' },
+                    'telnyx-outbound': { price: 0.0100, name: 'Telnyx Outbound (US)', unit: '/min' },
+                    'plivo-inbound': { price: 0.0085, name: 'Plivo Inbound (US)', unit: '/min' },
+                    'plivo-outbound': { price: 0.0120, name: 'Plivo Outbound (US)', unit: '/min' }
+                },
+                sms: {
+                    'twilio': { price: 0.0079, name: 'Twilio', unit: '/msg' },
+                    'telnyx': { price: 0.004, name: 'Telnyx', unit: '/msg' },
+                    'vonage': { price: 0.0076, name: 'Vonage', unit: '/msg' },
+                    'plivo': { price: 0.0070, name: 'Plivo', unit: '/msg' }
+                },
+                email: {
+                    'ses': { price: 0.10, name: 'Amazon SES', unit: '/1K emails' },
+                    'sendgrid': { price: 0.50, name: 'SendGrid', unit: '/1K emails' },
+                    'mailgun': { price: 0.80, name: 'Mailgun', unit: '/1K emails' },
+                    'postmark': { price: 1.25, name: 'Postmark', unit: '/1K emails' }
+                }
+            }
+        };
+
+        // Load pricing data on page load
+        async function loadPricingData() {
+            try {
+                if (PRICING_CONFIG.useBackend) {
+                    // Try to load from backend API
+                    const response = await fetch(PRICING_CONFIG.backendURL);
+                    if (response.ok) {
+                        const data = await response.json();
+                        pricing = data.pricing;
+                        pricingMetadata = {
+                            lastUpdated: data.lastUpdated,
+                            version: data.version,
+                            source: 'backend'
+                        };
+                        console.log('✓ Pricing loaded from backend API');
+                    } else {
+                        throw new Error('Backend API unavailable');
+                    }
+                } else if (!PRICING_CONFIG.useEmbedded) {
+                    // Try to load from local JSON file
+                    const response = await fetch(PRICING_CONFIG.localJSON);
+                    if (response.ok) {
+                        const data = await response.json();
+                        pricing = data.pricing;
+                        pricingMetadata = {
+                            lastUpdated: data.lastUpdated,
+                            version: data.version,
+                            source: 'file'
+                        };
+                        console.log('✓ Pricing loaded from JSON file');
+                    } else {
+                        throw new Error('JSON file not found');
+                    }
+                } else {
+                    throw new Error('Using embedded pricing');
+                }
+            } catch (error) {
+                // Fallback to embedded pricing
+                console.log('ℹ Using embedded pricing data:', error.message);
+                pricing = embeddedPricing.pricing;
+                pricingMetadata = {
+                    lastUpdated: embeddedPricing.lastUpdated,
+                    version: embeddedPricing.version,
+                    source: 'embedded'
+                };
+            }
+
+            // Update UI with pricing metadata
+            updatePricingStatus();
+            
+            // Populate dropdowns
+            populateDropdowns();
+            
+            // Initialize calculations
+            initializeDefaults();
+            calculate();
+            
+            // Hide loading overlay
+            document.getElementById('loading-overlay').classList.add('hidden');
+        }
+
+        function updatePricingStatus() {
+            const lastUpdated = new Date(pricingMetadata.lastUpdated);
+            const formatted = lastUpdated.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
+            
+            document.getElementById('last-updated').textContent = formatted;
+            
+            const sourceText = {
+                'backend': 'Live API data',
+                'file': 'JSON file data',
+                'embedded': 'Static pricing data'
+            };
+            document.getElementById('pricing-source').textContent = sourceText[pricingMetadata.source];
+        }
+
+        function populateDropdowns() {
+            // Populate STT dropdown
+            const sttSelect = document.getElementById('stt-provider');
+            for (const [key, value] of Object.entries(pricing.stt)) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = `${value.name} - $${value.price.toFixed(4)}${value.unit}`;
+                sttSelect.appendChild(option);
+            }
+            const sttCustom = document.createElement('option');
+            sttCustom.value = 'custom';
+            sttCustom.textContent = 'Custom Price';
+            sttSelect.appendChild(sttCustom);
+
+            // Populate TTS dropdown
+            const ttsSelect = document.getElementById('tts-provider');
+            for (const [key, value] of Object.entries(pricing.tts)) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = `${value.name} - $${value.price.toFixed(3)}${value.unit}`;
+                ttsSelect.appendChild(option);
+            }
+            const ttsCustom = document.createElement('option');
+            ttsCustom.value = 'custom';
+            ttsCustom.textContent = 'Custom Price';
+            ttsSelect.appendChild(ttsCustom);
+
+            // Populate LLM dropdown
+            const llmSelect = document.getElementById('llm-model');
+            
+            const openaiGroup = document.createElement('optgroup');
+            openaiGroup.label = 'OpenAI';
+            const anthropicGroup = document.createElement('optgroup');
+            anthropicGroup.label = 'Anthropic Claude';
+            const googleGroup = document.createElement('optgroup');
+            googleGroup.label = 'Google Gemini';
+            
+            for (const [key, value] of Object.entries(pricing.llm)) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = `${value.name} - $${value.input.toFixed(2)}/$${value.output.toFixed(2)}`;
+                
+                if (key.startsWith('gpt')) {
+                    openaiGroup.appendChild(option);
+                } else if (key.startsWith('claude')) {
+                    anthropicGroup.appendChild(option);
+                } else if (key.startsWith('gemini')) {
+                    googleGroup.appendChild(option);
+                }
+            }
+            
+            llmSelect.appendChild(openaiGroup);
+            llmSelect.appendChild(anthropicGroup);
+            llmSelect.appendChild(googleGroup);
+            
+            const llmCustom = document.createElement('option');
+            llmCustom.value = 'custom';
+            llmCustom.textContent = 'Custom Price';
+            llmSelect.appendChild(llmCustom);
+
+            // Populate Telephony dropdown
+            const telephonySelect = document.getElementById('telephony-provider');
+            
+            const twilioGroup = document.createElement('optgroup');
+            twilioGroup.label = 'Twilio';
+            const vonageGroup = document.createElement('optgroup');
+            vonageGroup.label = 'Vonage';
+            const telnyxGroup = document.createElement('optgroup');
+            telnyxGroup.label = 'Telnyx';
+            const plivoGroup = document.createElement('optgroup');
+            plivoGroup.label = 'Plivo';
+            
+            for (const [key, value] of Object.entries(pricing.telephony)) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = `${value.name} - $${value.price.toFixed(4)}${value.unit}`;
+                
+                if (key.startsWith('twilio')) {
+                    twilioGroup.appendChild(option);
+                } else if (key.startsWith('vonage')) {
+                    vonageGroup.appendChild(option);
+                } else if (key.startsWith('telnyx')) {
+                    telnyxGroup.appendChild(option);
+                } else if (key.startsWith('plivo')) {
+                    plivoGroup.appendChild(option);
+                }
+            }
+            
+            telephonySelect.appendChild(twilioGroup);
+            telephonySelect.appendChild(vonageGroup);
+            telephonySelect.appendChild(telnyxGroup);
+            telephonySelect.appendChild(plivoGroup);
+            
+            const telephonyCustom = document.createElement('option');
+            telephonyCustom.value = 'custom';
+            telephonyCustom.textContent = 'Custom Price';
+            telephonySelect.appendChild(telephonyCustom);
+
+            // Populate SMS dropdown
+            const smsSelect = document.getElementById('sms-provider');
+            for (const [key, value] of Object.entries(pricing.sms)) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = `${value.name} - $${value.price.toFixed(4)}${value.unit}`;
+                smsSelect.appendChild(option);
+            }
+            const smsCustom = document.createElement('option');
+            smsCustom.value = 'custom';
+            smsCustom.textContent = 'Custom Price';
+            smsSelect.appendChild(smsCustom);
+
+            // Populate Email dropdown
+            const emailSelect = document.getElementById('email-provider');
+            for (const [key, value] of Object.entries(pricing.email)) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = `${value.name} - $${value.price.toFixed(2)}${value.unit}`;
+                emailSelect.appendChild(option);
+            }
+            const emailCustom = document.createElement('option');
+            emailCustom.value = 'custom';
+            emailCustom.textContent = 'Custom Price';
+            emailSelect.appendChild(emailCustom);
+        }
+
+        function initializeDefaults() {
+            updateSTTPrice();
+            updateTTSPrice();
+            updateLLMPrice();
+            updateTelephonyPrice();
+            updateSMSPrice();
+            updateEmailPrice();
+        }
+
+        function setCallType(type) {
+            currentCallType = type;
+            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const select = document.getElementById('telephony-provider');
+            const currentProvider = select.value;
+            
+            if (currentProvider.includes('inbound') || currentProvider.includes('outbound')) {
+                const providerBase = currentProvider.split('-').slice(0, -1).join('-');
+                const newProvider = providerBase + '-' + type;
+                if (pricing.telephony[newProvider]) {
+                    select.value = newProvider;
+                    updateTelephonyPrice();
+                }
+            }
+        }
+
+        function updateSTTPrice() {
+            const provider = document.getElementById('stt-provider').value;
+            if (provider !== 'custom' && pricing.stt[provider]) {
+                document.getElementById('stt-price').value = pricing.stt[provider].price;
+                calculate();
+            }
+        }
+
+        function updateTTSPrice() {
+            const provider = document.getElementById('tts-provider').value;
+            if (provider !== 'custom' && pricing.tts[provider]) {
+                document.getElementById('tts-price').value = pricing.tts[provider].price;
+                calculate();
+            }
+        }
+
+        function updateLLMPrice() {
+            const model = document.getElementById('llm-model').value;
+            if (model !== 'custom' && pricing.llm[model]) {
+                document.getElementById('llm-input-price').value = pricing.llm[model].input;
+                document.getElementById('llm-output-price').value = pricing.llm[model].output;
+                calculate();
+            }
+        }
+
+        function updateTelephonyPrice() {
+            const provider = document.getElementById('telephony-provider').value;
+            if (provider !== 'custom' && pricing.telephony[provider]) {
+                document.getElementById('telephony-price').value = pricing.telephony[provider].price;
+                calculate();
+            }
+        }
+
+        function updateSMSPrice() {
+            const provider = document.getElementById('sms-provider').value;
+            if (provider !== 'custom' && pricing.sms[provider]) {
+                document.getElementById('sms-price').value = pricing.sms[provider].price;
+                calculate();
+            }
+        }
+
+        function updateEmailPrice() {
+            const provider = document.getElementById('email-provider').value;
+            if (provider !== 'custom' && pricing.email[provider]) {
+                document.getElementById('email-price').value = pricing.email[provider].price;
+                calculate();
+            }
+        }
+
+        document.getElementById('enable-sms').addEventListener('change', function() {
+            document.getElementById('sms-config').style.display = this.checked ? 'block' : 'none';
+            calculate();
+        });
+
+        document.getElementById('enable-email').addEventListener('change', function() {
+            document.getElementById('email-config').style.display = this.checked ? 'block' : 'none';
+            calculate();
+        });
+
+        function calculate() {
+            const sttPrice = parseFloat(document.getElementById('stt-price').value) || 0;
+            const ttsPrice = parseFloat(document.getElementById('tts-price').value) || 0;
+            const ttsChars = parseFloat(document.getElementById('tts-chars').value) || 0;
+            const llmInputPrice = parseFloat(document.getElementById('llm-input-price').value) || 0;
+            const llmOutputPrice = parseFloat(document.getElementById('llm-output-price').value) || 0;
+            const llmInputTokens = parseFloat(document.getElementById('llm-input-tokens').value) || 0;
+            const llmOutputTokens = parseFloat(document.getElementById('llm-output-tokens').value) || 0;
+            const telephonyPrice = parseFloat(document.getElementById('telephony-price').value) || 0;
+            const callDuration = parseFloat(document.getElementById('call-duration').value) || 0;
+            const callsPerMonth = parseFloat(document.getElementById('calls-per-month').value) || 0;
+
+            const sttCostPerMin = sttPrice;
+            const ttsCostPerMin = (ttsPrice / 1000) * ttsChars;
+            const llmInputCostPerMin = (llmInputPrice / 1000000) * llmInputTokens;
+            const llmOutputCostPerMin = (llmOutputPrice / 1000000) * llmOutputTokens;
+            const telephonyCostPerMin = telephonyPrice;
+
+            let totalPerMin = sttCostPerMin + ttsCostPerMin + llmInputCostPerMin + llmOutputCostPerMin + telephonyCostPerMin;
+
+            let smsCostPerCall = 0;
+            if (document.getElementById('enable-sms').checked) {
+                const smsPrice = parseFloat(document.getElementById('sms-price').value) || 0;
+                const smsPerCall = parseFloat(document.getElementById('sms-per-call').value) || 0;
+                smsCostPerCall = smsPrice * smsPerCall;
+                document.getElementById('breakdown-sms-item').style.display = 'flex';
+                document.getElementById('breakdown-sms').textContent = '$' + (smsCostPerCall / callDuration).toFixed(4);
+            } else {
+                document.getElementById('breakdown-sms-item').style.display = 'none';
+            }
+
+            let emailCostPerCall = 0;
+            if (document.getElementById('enable-email').checked) {
+                const emailPrice = parseFloat(document.getElementById('email-price').value) || 0;
+                const emailPerCall = parseFloat(document.getElementById('email-per-call').value) || 0;
+                emailCostPerCall = (emailPrice / 1000) * emailPerCall;
+                document.getElementById('breakdown-email-item').style.display = 'flex';
+                document.getElementById('breakdown-email').textContent = '$' + (emailCostPerCall / callDuration).toFixed(4);
+            } else {
+                document.getElementById('breakdown-email-item').style.display = 'none';
+            }
+
+            totalPerMin += (smsCostPerCall + emailCostPerCall) / callDuration;
+
+            const costPerCall = totalPerMin * callDuration;
+            const costPerHour = totalPerMin * 60;
+            const costMonthly = costPerCall * callsPerMonth;
+
+            document.getElementById('breakdown-stt').textContent = '$' + sttCostPerMin.toFixed(4);
+            document.getElementById('breakdown-tts').textContent = '$' + ttsCostPerMin.toFixed(4);
+            document.getElementById('breakdown-llm-input').textContent = '$' + llmInputCostPerMin.toFixed(4);
+            document.getElementById('breakdown-llm-output').textContent = '$' + llmOutputCostPerMin.toFixed(4);
+            document.getElementById('breakdown-telephony').textContent = '$' + telephonyCostPerMin.toFixed(4);
+            document.getElementById('breakdown-total').textContent = '$' + totalPerMin.toFixed(4);
+
+            document.getElementById('cost-per-call').textContent = '$' + costPerCall.toFixed(4);
+            document.getElementById('cost-per-minute').textContent = '$' + totalPerMin.toFixed(4);
+            document.getElementById('cost-per-hour').textContent = '$' + costPerHour.toFixed(2);
+            document.getElementById('cost-monthly').textContent = '$' + costMonthly.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', loadPricingData);
+    </script>
+</body>
+</html>

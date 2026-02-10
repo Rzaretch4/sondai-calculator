@@ -1,0 +1,292 @@
+{
+  "lastUpdated": "2026-02-09",
+  "version": "1.0.0",
+  "pricing": {
+    "stt": {
+      "deepgram-nova2": {
+        "price": 0.0043,
+        "name": "Deepgram Nova 2 (Batch)",
+        "unit": "/min",
+        "source": "https://deepgram.com/pricing"
+      },
+      "deepgram-nova3": {
+        "price": 0.0077,
+        "name": "Deepgram Nova 3 (Streaming)",
+        "unit": "/min",
+        "source": "https://deepgram.com/pricing"
+      },
+      "assembly-best": {
+        "price": 0.0050,
+        "name": "AssemblyAI Best",
+        "unit": "/min",
+        "source": "https://www.assemblyai.com/pricing"
+      },
+      "assembly-nano": {
+        "price": 0.0025,
+        "name": "AssemblyAI Nano",
+        "unit": "/min",
+        "source": "https://www.assemblyai.com/pricing"
+      },
+      "openai-whisper": {
+        "price": 0.0060,
+        "name": "OpenAI Whisper",
+        "unit": "/min",
+        "source": "https://platform.openai.com/pricing"
+      },
+      "openai-gpt4o-transcribe": {
+        "price": 0.0060,
+        "name": "OpenAI GPT-4o Transcribe",
+        "unit": "/min",
+        "source": "https://platform.openai.com/pricing"
+      },
+      "azure-stt": {
+        "price": 0.0160,
+        "name": "Azure Speech STT",
+        "unit": "/min",
+        "source": "https://azure.microsoft.com/pricing/details/cognitive-services/speech-services/"
+      },
+      "google-chirp": {
+        "price": 0.0160,
+        "name": "Google Chirp",
+        "unit": "/min",
+        "source": "https://cloud.google.com/speech-to-text/pricing"
+      }
+    },
+    "tts": {
+      "deepgram-aura2": {
+        "price": 0.030,
+        "name": "Deepgram Aura 2",
+        "unit": "/1K chars",
+        "source": "https://deepgram.com/pricing"
+      },
+      "elevenlabs-flash": {
+        "price": 0.08,
+        "name": "ElevenLabs Flash v2.5",
+        "unit": "/1K chars",
+        "source": "https://elevenlabs.io/pricing/api"
+      },
+      "elevenlabs-turbo": {
+        "price": 0.10,
+        "name": "ElevenLabs Turbo v2.5",
+        "unit": "/1K chars",
+        "source": "https://elevenlabs.io/pricing/api"
+      },
+      "elevenlabs-multilingual": {
+        "price": 0.30,
+        "name": "ElevenLabs Multilingual v2",
+        "unit": "/1K chars",
+        "source": "https://elevenlabs.io/pricing/api"
+      },
+      "openai-tts": {
+        "price": 0.015,
+        "name": "OpenAI TTS",
+        "unit": "/1K chars",
+        "source": "https://platform.openai.com/pricing"
+      },
+      "openai-tts-hd": {
+        "price": 0.030,
+        "name": "OpenAI TTS HD",
+        "unit": "/1K chars",
+        "source": "https://platform.openai.com/pricing"
+      },
+      "azure-neural": {
+        "price": 0.016,
+        "name": "Azure Neural TTS",
+        "unit": "/1K chars",
+        "source": "https://azure.microsoft.com/pricing/details/cognitive-services/speech-services/"
+      },
+      "google-wavenet": {
+        "price": 0.016,
+        "name": "Google WaveNet",
+        "unit": "/1K chars",
+        "source": "https://cloud.google.com/text-to-speech/pricing"
+      },
+      "cartesia": {
+        "price": 0.038,
+        "name": "Cartesia Sonic",
+        "unit": "/1K chars",
+        "source": "https://cartesia.ai/pricing"
+      }
+    },
+    "llm": {
+      "gpt-4o": {
+        "input": 2.50,
+        "output": 10.00,
+        "name": "GPT-4o",
+        "unit": "/1M tokens",
+        "source": "https://platform.openai.com/pricing"
+      },
+      "gpt-4o-mini": {
+        "input": 0.15,
+        "output": 0.60,
+        "name": "GPT-4o mini",
+        "unit": "/1M tokens",
+        "source": "https://platform.openai.com/pricing"
+      },
+      "gpt-4-turbo": {
+        "input": 10.00,
+        "output": 30.00,
+        "name": "GPT-4 Turbo",
+        "unit": "/1M tokens",
+        "source": "https://platform.openai.com/pricing"
+      },
+      "gpt-3.5-turbo": {
+        "input": 0.50,
+        "output": 1.50,
+        "name": "GPT-3.5 Turbo",
+        "unit": "/1M tokens",
+        "source": "https://platform.openai.com/pricing"
+      },
+      "claude-opus-4.5": {
+        "input": 5.00,
+        "output": 25.00,
+        "name": "Claude Opus 4.5",
+        "unit": "/1M tokens",
+        "source": "https://docs.anthropic.com/pricing"
+      },
+      "claude-sonnet-4.5": {
+        "input": 3.00,
+        "output": 15.00,
+        "name": "Claude Sonnet 4.5",
+        "unit": "/1M tokens",
+        "source": "https://docs.anthropic.com/pricing"
+      },
+      "claude-haiku-4.5": {
+        "input": 1.00,
+        "output": 5.00,
+        "name": "Claude Haiku 4.5",
+        "unit": "/1M tokens",
+        "source": "https://docs.anthropic.com/pricing"
+      },
+      "claude-sonnet-4": {
+        "input": 3.00,
+        "output": 15.00,
+        "name": "Claude Sonnet 4",
+        "unit": "/1M tokens",
+        "source": "https://docs.anthropic.com/pricing"
+      },
+      "gemini-2.0-flash": {
+        "input": 0.075,
+        "output": 0.30,
+        "name": "Gemini 2.0 Flash",
+        "unit": "/1M tokens",
+        "source": "https://ai.google.dev/pricing"
+      },
+      "gemini-1.5-pro": {
+        "input": 1.25,
+        "output": 5.00,
+        "name": "Gemini 1.5 Pro",
+        "unit": "/1M tokens",
+        "source": "https://ai.google.dev/pricing"
+      }
+    },
+    "telephony": {
+      "twilio-inbound": {
+        "price": 0.0085,
+        "name": "Twilio Inbound (US)",
+        "unit": "/min",
+        "source": "https://www.twilio.com/voice/pricing/us"
+      },
+      "twilio-outbound": {
+        "price": 0.0140,
+        "name": "Twilio Outbound (US)",
+        "unit": "/min",
+        "source": "https://www.twilio.com/voice/pricing/us"
+      },
+      "twilio-sip-outbound": {
+        "price": 0.0020,
+        "name": "Twilio SIP Outbound",
+        "unit": "/min",
+        "source": "https://www.twilio.com/sip-trunking/pricing"
+      },
+      "vonage-inbound": {
+        "price": 0.0070,
+        "name": "Vonage Inbound (US)",
+        "unit": "/min",
+        "source": "https://www.vonage.com/communications-apis/pricing/"
+      },
+      "vonage-outbound": {
+        "price": 0.0120,
+        "name": "Vonage Outbound (US)",
+        "unit": "/min",
+        "source": "https://www.vonage.com/communications-apis/pricing/"
+      },
+      "telnyx-inbound": {
+        "price": 0.0040,
+        "name": "Telnyx Inbound (US)",
+        "unit": "/min",
+        "source": "https://telnyx.com/pricing/elastic-sip"
+      },
+      "telnyx-outbound": {
+        "price": 0.0100,
+        "name": "Telnyx Outbound (US)",
+        "unit": "/min",
+        "source": "https://telnyx.com/pricing/elastic-sip"
+      },
+      "plivo-inbound": {
+        "price": 0.0085,
+        "name": "Plivo Inbound (US)",
+        "unit": "/min",
+        "source": "https://www.plivo.com/pricing/US/"
+      },
+      "plivo-outbound": {
+        "price": 0.0120,
+        "name": "Plivo Outbound (US)",
+        "unit": "/min",
+        "source": "https://www.plivo.com/pricing/US/"
+      }
+    },
+    "sms": {
+      "twilio": {
+        "price": 0.0079,
+        "name": "Twilio",
+        "unit": "/msg",
+        "source": "https://www.twilio.com/sms/pricing/us"
+      },
+      "telnyx": {
+        "price": 0.004,
+        "name": "Telnyx",
+        "unit": "/msg",
+        "source": "https://telnyx.com/pricing/messaging"
+      },
+      "vonage": {
+        "price": 0.0076,
+        "name": "Vonage",
+        "unit": "/msg",
+        "source": "https://www.vonage.com/communications-apis/pricing/"
+      },
+      "plivo": {
+        "price": 0.0070,
+        "name": "Plivo",
+        "unit": "/msg",
+        "source": "https://www.plivo.com/pricing/US/"
+      }
+    },
+    "email": {
+      "ses": {
+        "price": 0.10,
+        "name": "Amazon SES",
+        "unit": "/1K emails",
+        "source": "https://aws.amazon.com/ses/pricing/"
+      },
+      "sendgrid": {
+        "price": 0.50,
+        "name": "SendGrid",
+        "unit": "/1K emails",
+        "source": "https://sendgrid.com/pricing/"
+      },
+      "mailgun": {
+        "price": 0.80,
+        "name": "Mailgun",
+        "unit": "/1K emails",
+        "source": "https://www.mailgun.com/pricing/"
+      },
+      "postmark": {
+        "price": 1.25,
+        "name": "Postmark",
+        "unit": "/1K emails",
+        "source": "https://postmarkapp.com/pricing"
+      }
+    }
+  }
+}
